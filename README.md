@@ -5,7 +5,7 @@
 
 ## Version info
 * kubernetes 1.17.6
-* calico 3.14
+* calico 3.13
 
 ### Note
 * 귀찮아서 crio 대신 docker 사용중

@@ -14,7 +14,6 @@
       - curl
       - gnupg-agent
       - software-properties-common
-      - python-apt
 
   - name: Add an apt signing key for Docker
     apt_key:
@@ -94,7 +93,7 @@
       state: restarted
 
   - name: Initialize the Kubernetes cluster using kubeadm
-    command: kubeadm init --apiserver-advertise-address="192.168.50.10" --apiserver-cert-extra-sans="192.168.50.10"  --node-name k8s-master --pod-network-cidr=172.16.0.0/16
+    command: kubeadm init --apiserver-advertise-address="192.168.50.10" --apiserver-cert-extra-sans="192.168.50.10"  --node-name master --pod-network-cidr=172.16.0.0/16
 
   - name: Make .kube directory
     file:
@@ -104,11 +103,13 @@
       group: vagrant
       mode: 0775
 
-  - name: Setup kubeconfig for vagrant user
-    command: "{{ item }}"
-    with_items:
-     - cp -i /etc/kubernetes/admin.conf /home/vagrant/.kube/config
-     - chown vagrant:vagrant /home/vagrant/.kube/config
+  - name: Copy kubeconfig file to .kube directory
+    copy:
+     src: /etc/kubernetes/admin.conf
+     dest: /home/vagrant/.kube/config
+     remote_src: yes
+     owner: vagrant
+     group: vagrant
 
   - name: Install calico pod network
     become: false
