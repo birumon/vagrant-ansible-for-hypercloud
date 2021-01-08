@@ -1,5 +1,5 @@
 # Vagrant-Ansible for HyperCloud
-## Kubernetes test environment for HyperCloud using Vagrant & Ansible
+## Kubernetes cluster for HyperCloud test environment using Vagrant & Ansible
 
 ## Prerequisites
 1. VirtualBox
@@ -23,6 +23,7 @@ $ sudo apt install ansible
 * Ubuntu-18.04
 * Kubernetes-1.17.6
 * Calico-3.13
+* Calicoctl-latest
 
 ### Note
 * Using docker instead of crio 
@@ -31,4 +32,5 @@ $ sudo apt install ansible
 vagrant up #install
 vagrant ssh master #master node
 vagrant ssh node-1 #worker node-1
+vagrant ssh node-2 #worker node-2
 ```

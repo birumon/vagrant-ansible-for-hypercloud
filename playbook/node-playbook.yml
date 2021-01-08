@@ -98,6 +98,19 @@
   - name: Join the node to cluster
     command: sh /tmp/join-command.sh
 
+  - name: Add alias
+    lineinfile:
+      path: /home/vagrant/.bash_aliases
+      create: yes
+      line: 'alias {{ item.alias }}="{{ item.command }}"'
+      regexp: "^alias {{ item.alias }}="
+      mode: 0644
+      owner: vagrant
+      group: vagrant
+    with_items:
+      - { alias: 'k', command: 'kubectl' }
+      - { alias: 'calicoctl', command: 'kubectl exec -i -n kube-system calicoctl /calicoctl --'}
+  
   handlers:
     - name: docker status
       service: name=docker state=started
